@@ -5,7 +5,10 @@ const ytdl = require("ytdl-core")
 const app=express()
 app.use(express.json())
 
-app.get("/",(req,res)=>{res.send("i am working")})
+app.all('/', (req, res) => {
+    console.log("Just got a request!")
+    res.send('Yo!')
+})
 
 
 app.post("/video",async(req,res)=>{
@@ -24,5 +27,4 @@ console.log(videourl)
 res.status(200).json(store)
 })
 
-
-app.listen(3000,()=>{console.log(`server running on http://localhost:3000`)})
+app.listen(process.env.PORT || 3000)
