@@ -4,11 +4,7 @@ const cors = require('cors');
 
 const app=express()
 app.use(express.json())
-app.use(cors({
-    origin: '*',
-    credentials:"true",
-    method:["GET","POST"]
-}));
+app.use(cors());
 app.all('/', (req, res) => {
    
     res.json('request to /video with a url param in body via a post request and get the output :)')
