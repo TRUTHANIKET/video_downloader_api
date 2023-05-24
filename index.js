@@ -6,8 +6,8 @@ const app=express()
 app.use(express.json())
 
 app.all('/', (req, res) => {
-    console.log("Just got a request!")
-    res.send('Yo!')
+   
+    res.json('request to /video with a url param in body via a post request and get the output :)')
 })
 
 
