@@ -6,6 +6,7 @@ const app=express()
 app.use(express.json())
 app.use(cors({
     origin: '*',
+    credentials:"true",
     method:["GET","POST"]
 }));
 app.all('/', (req, res) => {
