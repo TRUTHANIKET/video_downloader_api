@@ -1,10 +1,12 @@
 const express=require("express")
 const ytdl = require("ytdl-core")
-
+const cors = require('cors');
 
 const app=express()
 app.use(express.json())
-
+app.use(cors({
+    origin: '*'
+}));
 app.all('/', (req, res) => {
    
     res.json('request to /video with a url param in body via a post request and get the output :)')
