@@ -1,18 +1,20 @@
 const express=require("express")
 const ytdl = require("ytdl-core")
 const cors=require("cors")
+const serverless=require("serverless-http")
 
+const router = express.Router();
 const app=express()
 app.use(cors());
 app.use(express.json())
 
-app.all('/', (req, res) => {
+router.all('/', (req, res) => {
     console.log("Just got a request!")
     res.json("send the post request to /video endpoint and include url param in the body of post");
 })
 
 
-app.post("/video",async(req,res)=>{
+router.post("/video",async(req,res)=>{
 try{
     const url=await req.body.url
 const videoid=await ytdl.getURLVideoID(url)
@@ -33,4 +35,7 @@ res.status(200).json(store)
 }
 })
 
-app.listen(process.env.PORT || 5000)
+
+app.use(`/.netlify/functions/api`, router);
+module.exports = app;
+module.exports.handler = serverless(app);
