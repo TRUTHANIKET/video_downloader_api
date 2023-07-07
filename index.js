@@ -1,18 +1,24 @@
 const express=require("express")
 const ytdl = require("ytdl-core")
-const cors = require('cors');
+const cors=require("cors")
 
 const app=express()
+app.use(cors(
+    {
+        origin:"*"
+    }
+));
 app.use(express.json())
-app.use(cors()); 
+
 app.all('/', (req, res) => {
-   
-    res.json('request to /video with a url param in body via a post request and get the output :)')
+    console.log("Just got a request!")
+    res.json("send the post request to /video endpoint and include url param in the body of post");
 })
 
 
 app.post("/video",async(req,res)=>{
-const url=await req.body.url
+try{
+    const url=await req.body.url
 const videoid=await ytdl.getURLVideoID(url)
 const meta=await ytdl.getBasicInfo(url)
 const store=meta.formats
@@ -23,8 +29,12 @@ const quality=await store.map(r=>{
 const videourl=await store.map(r=>{
     return(`${r.url} and ${r.qualityLabel} `)
 })
-console.log(videourl)
+console.log("request worked")
 res.status(200).json(store)
+}catch(e){
+    console.log(e.message)
+    res.status(500).json([{qualityLabel:"error check your url",url:"somethings wrong",mimeType:":)"}])
+}
 })
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 5000)
