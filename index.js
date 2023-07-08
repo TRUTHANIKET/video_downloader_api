@@ -33,7 +33,7 @@ console.log("request worked")
 res.status(200).json(store)
 }catch(e){
     console.log(e.message)
-    res.status(500).json([{qualityLabel:"error check your url",url:"somethings wrong",mimeType:":)"}])
+    res.status(500).json([{qualityLabel:"error check your url",url:"somethings wrong",mimeType:":)",status:500}])
 }
 })
 
